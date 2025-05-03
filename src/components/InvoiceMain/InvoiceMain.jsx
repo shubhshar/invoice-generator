@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./InvoiceMain.css";
 import { invoiceEnums, mockEmpty } from "../../enums/enums";
+import { ToWords } from 'to-words';
 
 export default function Invoice() {
     const { mainHeroHeader, ownAddress, gstTitle, gstvalue, invoiceTitle, date } = invoiceEnums
     const [invoiceData, setInvoiceData] = useState(mockEmpty);
-
+    const toWords = new ToWords();
     const handleItemChange = (index, key, value) => {
         const updatedItems = [...invoiceData.items];
         updatedItems[index][key] = key === "qty" || key === "rate" ? parseFloat(value) || 0 : value;
@@ -188,7 +189,7 @@ export default function Invoice() {
                 </tbody>
             </table>
             <div className="no-print">
-                <button onClick={handleAddRow}>➕ Add New Row</button>
+                <button style={{display:"flex"}} onClick={handleAddRow}> + Add New Row</button>
             </div>
             <div className="invoice-summary">
                 <p><strong>Subtotal:</strong> ₹{subtotal.toFixed(2)}</p>
@@ -196,7 +197,7 @@ export default function Invoice() {
                 <p>CGST @9%: ₹{cgst.toFixed(2)}</p>
                 <p className="grand-total">Grand Total: ₹{grandTotal.toFixed(2)}</p>
                 <p className="in-words">
-                    (In Words: {/* Optionally convert to words here */})
+                    (In Words: {toWords.convert(grandTotal.toFixed(2),{currency:true})})
                 </p>
             </div>
 
