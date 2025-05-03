@@ -4,7 +4,7 @@ import { invoiceEnums, mockEmpty } from "../../enums/enums";
 import { ToWords } from 'to-words';
 
 export default function Invoice() {
-    const { mainHeroHeader, ownAddress, gstTitle, gstvalue, invoiceTitle, date } = invoiceEnums
+    const { mainHeroHeader, ownAddress, gstTitle, gstvalue, invoiceTitle, date, mobileTitle, mobileNumber } = invoiceEnums
     const [invoiceData, setInvoiceData] = useState(mockEmpty);
     const toWords = new ToWords();
     const handleItemChange = (index, key, value) => {
@@ -42,7 +42,8 @@ export default function Invoice() {
             <div className="invoice-header">
                 <h1>{mainHeroHeader}</h1>
                 <p>{ownAddress}</p>
-                <p><span>{gstTitle}</span>{gstvalue}</p>
+                <p><strong>{gstTitle}</strong>{gstvalue}</p>
+                <p><strong>{mobileTitle}</strong>{mobileNumber}</p>
                 <p>
                     {invoiceTitle}
                     <input
@@ -137,7 +138,7 @@ export default function Invoice() {
                         <th>HSN/SAC</th>
                         <th>Qty</th>
                         <th>Rate</th>
-                        <th>Total</th>
+                        <th style={{width:"100px"}}>Total Taxable Value (₹)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,42 +205,13 @@ export default function Invoice() {
             <div className="invoice-footer">
                 <div className="bank-details">
                     <p><strong>Bank Details for Payment:</strong></p>
-                    Branch Name:{" "}
-                    <input
-                        className="bankBranchAddress"
-                        type="text"
-                        value={invoiceData.bank.details}
-                        onChange={(e) =>
-                            setInvoiceData({
-                                ...invoiceData,
-                                bank: { ...invoiceData.bank, details: e.target.value }
-                            })
-                        }
-                    />
-                     <span className="print-only" >{invoiceData.bank.details}</span>
+                    <strong>Branch Name:{" "}</strong>
+                     <span>{invoiceData.bank.details}</span>
                     <p className="bankACandIfsc">
-                        A/C No:{" "}
-                        <input
-                            value={invoiceData.bank.account}
-                            onChange={(e) =>
-                                setInvoiceData({
-                                    ...invoiceData,
-                                    bank: { ...invoiceData.bank, account: e.target.value }
-                                })
-                            }
-                        />{"   "}
-                        <span className="print-only" >{invoiceData.bank.account}</span>  {" "}
-                         IFSC:{" "}
-                        <input
-                            value={invoiceData.bank.ifsc}
-                            onChange={(e) =>
-                                setInvoiceData({
-                                    ...invoiceData,
-                                    bank: { ...invoiceData.bank, ifsc: e.target.value }
-                                })
-                            }
-                        />
-                        <span className="print-only" >{invoiceData.bank.ifsc}</span>
+                      <strong>A/C No:{" "}</strong>  
+                        <span>{invoiceData.bank.account}</span>  {" "}
+                        <strong>& IFSC:{" "}</strong>
+                        <span>{invoiceData.bank.ifsc}</span>
                     </p>
                 </div>
                 <div className="signature">

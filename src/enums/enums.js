@@ -4,7 +4,9 @@ export const invoiceEnums = {
     gstTitle:"GSTIN No.:",
     gstvalue:"22CPIPS7530E1ZX",
     invoiceTitle: "Invoice No.: ",
-    date:"Date: "
+    date:"Date: ",
+    mobileTitle: "Mob No.: ",
+    mobileNumber: "7024443229"
 }
 
 
@@ -30,8 +32,8 @@ export const invoiceEnums = {
 
     ],
     bank: {
-      details: "",
-      account: "",
-      ifsc: ""
+      details: "Bank of Baroda, Tatibandh, Raipur",
+      account: "3917040000130",
+      ifsc: "BARBOTATIBA"
     }
   }
