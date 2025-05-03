@@ -215,6 +215,7 @@ export default function Invoice() {
                             })
                         }
                     />
+                     <span className="print-only" >{invoiceData.bank.details}</span>
                     <p>
                         A/C No:{" "}
                         <input
@@ -226,6 +227,7 @@ export default function Invoice() {
                                 })
                             }
                         />{" "}
+                        <span className="print-only" >{invoiceData.bank.account}</span>  {" "}
                         | IFSC:{" "}
                         <input
                             value={invoiceData.bank.ifsc}
@@ -236,6 +238,7 @@ export default function Invoice() {
                                 })
                             }
                         />
+                        <span className="print-only" >{invoiceData.bank.ifsc}</span>
                     </p>
                 </div>
                 <div className="signature">
