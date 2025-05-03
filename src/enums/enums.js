@@ -27,18 +27,7 @@ export const invoiceEnums = {
         qty: 0,
         rate: 0
       },
-      {
-        description: "",
-        hsn: "",
-        qty: 0,
-        rate: 0
-      },
-      {
-        description: "",
-        hsn: "",
-        qty: 0,
-        rate: 0
-      }
+
     ],
     bank: {
       details: "",

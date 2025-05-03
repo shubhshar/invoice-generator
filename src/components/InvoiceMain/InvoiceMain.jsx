@@ -1,105 +1,6 @@
-// import React from "react";
-// import "./InvoiceMain.css";
-// import { invoiceEnums } from "../../enums/enums";
-
-// export default function Invoice() {
-//     const {mainHeroHeader, ownAddress, gstTitle, gstvalue, invoiceTitle, date} = invoiceEnums
-//     const handlePrint = () => {
-//         window.print();
-//       };
-
-//   return (
-//     <>
-//     <div className="invoice-container">
-//       <div className="invoice-header">
-//         <h1>{mainHeroHeader}</h1>
-//         <p>{ownAddress}</p>
-//         <p><span>{gstTitle}</span>{gstvalue}</p>
-//         <p>{invoiceTitle} 13 | {date} 31/03/2022</p>
-//       </div>
-
-//       <div className="invoice-address">
-//         <p><strong>To:</strong> JSW ISPAT SPECIAL PRODUCTS LIMITED</p>
-//         <p>Village Kurud, Chandkhuri Marg, Mandir Hasaud, Raipur (C.G.)</p>
-//         <p>GSTIN: 22AAACM0501D2ZT</p>
-//         <p>WO No: WOR21-01015</p>
-//       </div>
-
-//       <table className="invoice-table">
-//         <thead>
-//           <tr>
-//             <th>S.No.</th>
-//             <th>Description of Goods</th>
-//             <th>HSN/SAC</th>
-//             <th>Qty</th>
-//             <th>Rate</th>
-//             <th>Total</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           <tr>
-//             <td>1</td>
-//             <td>Installation of ceiling & wall at our site control panel of furnace No. 03 SMS II Division</td>
-//             <td>9987</td>
-//             <td>42.237</td>
-//             <td>6,293</td>
-//             <td>2,66,722.02</td>
-//           </tr>
-//           <tr>
-//             <td>2</td>
-//             <td>Installation of door ionized with frame 2mm thick, section 4"x 3/4" at control panel of furnace No. 03 SMS II Division</td>
-//             <td>9987</td>
-//             <td>2.10</td>
-//             <td>7,154</td>
-//             <td>15,023.40</td>
-//           </tr>
-//           <tr>
-//             <td>3</td>
-//             <td>Installation of Godrej make door closure at control panel room furnace No. 03 SMS-II Division</td>
-//             <td>9987</td>
-//             <td>2</td>
-//             <td>2,000</td>
-//             <td>4,000.00</td>
-//           </tr>
-//         </tbody>
-//       </table>
-
-//       <div className="invoice-summary">
-//         <p><strong>Subtotal:</strong> ₹2,85,745.42</p>
-//         <p>SGST @9%: ₹25,717.08</p>
-//         <p>CGST @9%: ₹25,717.08</p>
-//         <p className="grand-total">Grand Total: ₹3,37,179.58</p>
-//         <p className="in-words">(In Words: Three Lakh Thirty Seven Thousand One Hundred Seventy Nine and Fifty Eight Paise Only)</p>
-//       </div>
-
-//       <div className="invoice-footer">
-//         <div className="bank-details">
-//           <p><strong>Bank Details for Payment:</strong></p>
-//           <p>Bank of Baroda, Tatibandh, Raipur</p>
-//           <p>A/C No: 3917040000130 | IFSC: BARB0TATIBA</p>
-//         </div>
-//         <div className="signature">
-//           <p>For, <strong>Shubham Aluminium</strong></p>
-//           <p className="authorised-sign">(Authorised Signatory)</p>
-//         </div>
-//       </div>
-//     </div>
-//      <div className="print-button-container no-print">
-//      <button onClick={handlePrint} className="print-button">Print / Download PDF</button>
-//    </div>
-//    </>
-//   );
-// }
-
-
-
-
-
-
-
 import React, { useState } from "react";
 import "./InvoiceMain.css";
-import { invoiceEnums, mockData, mockEmpty } from "../../enums/enums";
+import { invoiceEnums, mockEmpty } from "../../enums/enums";
 
 export default function Invoice() {
     const { mainHeroHeader, ownAddress, gstTitle, gstvalue, invoiceTitle, date } = invoiceEnums
@@ -113,6 +14,18 @@ export default function Invoice() {
 
     const handlePrint = () => {
         window.print();
+    };
+
+    const handleAddRow = () => {
+        setInvoiceData({
+            ...invoiceData,
+            items: [...invoiceData.items, { description: "", hsn: "", qty: "", rate: "" }],
+        });
+    };
+
+    const handleRemoveRow = (index) => {
+        const updatedItems = invoiceData.items.filter((_, i) => i !== index);
+        setInvoiceData({ ...invoiceData, items: updatedItems });
     };
 
     const subtotal = invoiceData.items.reduce(
@@ -184,7 +97,7 @@ export default function Invoice() {
                     <span className="print-only" >{invoiceData.client.address}</span>
                 </div>
                 <p>
-                    <div className="field-wrapper">
+                    <span className="field-wrapper">
                         <strong> GSTIN:{" "}</strong>
                         <input
                             value={invoiceData.client.gstin}
@@ -196,10 +109,10 @@ export default function Invoice() {
                             }
                         />
                         <span className="print-only" >{invoiceData.client.gstin}</span>
-                    </div>
+                    </span>
                 </p>
                 <p>
-                    <div className="field-wrapper">
+                    <span className="field-wrapper">
                         <strong> WO No:{" "}</strong>
                         <input
                             value={invoiceData.client.workOrder}
@@ -211,7 +124,7 @@ export default function Invoice() {
                             }
                         />
                         <span className="print-only" >{invoiceData.client.workOrder}</span>
-                    </div>
+                    </span>
                 </p>
             </div>
 
@@ -266,12 +179,17 @@ export default function Invoice() {
                                 <span className="print-only">{item.rate}</span>
                             </td>
                             <td>{(item.qty * item.rate).toFixed(2)}</td>
+                            <td className="no-print">
+                                <button onClick={() => handleRemoveRow(index)}>❌</button>
+                            </td>
                         </tr>
                     ))}
 
                 </tbody>
             </table>
-
+            <div className="no-print">
+                <button onClick={handleAddRow}>➕ Add New Row</button>
+            </div>
             <div className="invoice-summary">
                 <p><strong>Subtotal:</strong> ₹{subtotal.toFixed(2)}</p>
                 <p>SGST @9%: ₹{sgst.toFixed(2)}</p>
