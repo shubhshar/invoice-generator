@@ -204,6 +204,7 @@ export default function Invoice() {
             <div className="invoice-footer">
                 <div className="bank-details">
                     <p><strong>Bank Details for Payment:</strong></p>
+                    Branch Name:{" "}
                     <input
                         className="bankBranchAddress"
                         type="text"
@@ -216,7 +217,7 @@ export default function Invoice() {
                         }
                     />
                      <span className="print-only" >{invoiceData.bank.details}</span>
-                    <p>
+                    <p className="bankACandIfsc">
                         A/C No:{" "}
                         <input
                             value={invoiceData.bank.account}
@@ -226,9 +227,9 @@ export default function Invoice() {
                                     bank: { ...invoiceData.bank, account: e.target.value }
                                 })
                             }
-                        />{" "}
+                        />{"   "}
                         <span className="print-only" >{invoiceData.bank.account}</span>  {" "}
-                        | IFSC:{" "}
+                         IFSC:{" "}
                         <input
                             value={invoiceData.bank.ifsc}
                             onChange={(e) =>
