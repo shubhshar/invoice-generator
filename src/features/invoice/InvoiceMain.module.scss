@@ -1,0 +1,181 @@
+@use '../../styles/mixins' as mix;
+
+.invoice {
+  max-width: 900px;
+  padding: 30px;
+  border: 1px solid var(--color-border);
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+
+  input,
+  textarea {
+    background-color: var(--color-surface-alt);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
+  }
+
+  @include mix.respond-below(md) {
+    padding: 10px;
+    font-size: var(--font-size-sm);
+  }
+}
+
+.invoice__header {
+  text-align: center;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 10px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+
+    @include mix.respond-below(md) {
+      font-size: 20px;
+    }
+  }
+
+  p {
+    margin: 2px 0;
+  }
+}
+
+.invoice__address {
+  text-align: center;
+  margin: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 10px;
+
+  textarea {
+    max-width: 22rem;
+    min-width: 22rem;
+    max-height: 6rem;
+    min-height: 3rem;
+  }
+
+  input {
+    width: 22rem;
+  }
+
+  p {
+    margin: 4px 0 4px 27px;
+  }
+}
+
+.invoice__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th,
+  td {
+    border: 1px solid var(--color-border);
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+
+    @include mix.respond-below(md) {
+      font-size: 11px;
+      padding: 5px;
+    }
+  }
+
+  th {
+    background-color: var(--color-surface-alt);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  td textarea {
+    max-width: 22rem;
+    min-width: 22rem;
+    min-height: 5rem;
+    box-sizing: border-box;
+  }
+
+  td:nth-child(6) {
+    width: 80px;
+    text-align: center;
+  }
+}
+
+.invoice__table-total-header {
+  width: 100px;
+}
+
+.invoice__hsn-qty-rate {
+  width: 4rem;
+}
+
+.invoice__summary {
+  margin-top: 20px;
+  border-top: 2px solid var(--color-border);
+  padding-top: 10px;
+  @include mix.flex(column, center, flex-end);
+
+  p {
+    margin: 4px 0;
+  }
+}
+
+.invoice__summary-total {
+  font-weight: bold;
+  font-size: var(--font-size-md);
+  margin-top: 10px;
+}
+
+.invoice__summary-words {
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.invoice__footer {
+  @include mix.flex(row, space-between, stretch);
+  margin-top: 40px;
+
+  @include mix.respond-below(md) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.invoice__bank-details {
+  max-width: 60%;
+  @include mix.flex(column, flex-start, flex-start);
+
+  @include mix.respond-below(md) {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+}
+
+.invoice__bank-ac-ifsc {
+  @include mix.respond-below(md) {
+    @include mix.flex(column);
+  }
+}
+
+.invoice__signature {
+  text-align: right;
+
+  @include mix.respond-below(md) {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+}
+
+.invoice__signature-line {
+  margin-top: 50px;
+  text-decoration: underline;
+}
+
+.invoice__actions {
+  margin-top: 20px;
+  text-align: center;
+}

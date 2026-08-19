@@ -1,0 +1,40 @@
+@use 'sass:map';
+@use 'variables' as vars;
+
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+@mixin grid($columns: 1, $gap: 0) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+// Mobile-first: `respond-to(md)` emits a `min-width` query at the `md` breakpoint.
+@mixin respond-to($breakpoint) {
+  @if not map.has-key(vars.$breakpoints, $breakpoint) {
+    @error 'Unknown breakpoint `#{$breakpoint}`. Available: #{map.keys(vars.$breakpoints)}.';
+  }
+  @media (min-width: map.get(vars.$breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// Escape hatch for the existing max-width rules carried over from InvoiceMain.css.
+@mixin respond-below($breakpoint) {
+  @if not map.has-key(vars.$breakpoints, $breakpoint) {
+    @error 'Unknown breakpoint `#{$breakpoint}`. Available: #{map.keys(vars.$breakpoints)}.';
+  }
+  @media (max-width: map.get(vars.$breakpoints, $breakpoint)) {
+    @content;
+  }
+}
