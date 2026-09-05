@@ -1,5 +1,4 @@
 import { useState, type ChangeEvent } from 'react'
-import clsx from 'clsx'
 import { ToWords } from 'to-words'
 import { Button } from '../../components/Button'
 import { invoiceEnums, mockEmpty, type InvoiceData, type InvoiceItem } from './enums'
@@ -78,7 +77,6 @@ export default function InvoiceMain() {
               setInvoiceData({ ...invoiceData, invoiceNo: e.target.value })
             }
           />
-          <span className="u-print-only">{invoiceData.invoiceNo}</span>
           {' '} | <strong> {date}</strong>
           <input
             type="date"
@@ -87,70 +85,46 @@ export default function InvoiceMain() {
               setInvoiceData({ ...invoiceData, date: e.target.value })
             }
           />
-          <span className="u-print-only">{invoiceData.date}</span>
         </p>
       </div>
 
       <div className={styles.invoice__address}>
-        <p>
-          <strong>M/s:</strong>{' '}
-          <span>
-            <input
-              value={invoiceData.client.name}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setInvoiceData({
-                  ...invoiceData,
-                  client: { ...invoiceData.client, name: e.target.value },
-                })
-              }
-            />
-            <span className="u-print-only">{invoiceData.client.name}</span>
-          </span>
-        </p>
-        <div>
-          <strong>Address:</strong>{' '}
-          <textarea
-            rows={2}
-            value={invoiceData.client.address}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setInvoiceData({
-                ...invoiceData,
-                client: { ...invoiceData.client, address: e.target.value },
-              })
+        <div className={styles.invoice__field}>
+          <strong>M/s:</strong>
+          <input
+            value={invoiceData.client.name}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInvoiceData({ ...invoiceData, client: { ...invoiceData.client, name: e.target.value } })
             }
           />
-          <span className="u-print-only">{invoiceData.client.address}</span>
         </div>
-        <p>
-          <span>
-            <strong> GSTIN:{' '}</strong>
-            <input
-              value={invoiceData.client.gstin}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setInvoiceData({
-                  ...invoiceData,
-                  client: { ...invoiceData.client, gstin: e.target.value },
-                })
-              }
-            />
-            <span className="u-print-only">{invoiceData.client.gstin}</span>
-          </span>
-        </p>
-        <p>
-          <span>
-            <strong> WO No:{' '}</strong>
-            <input
-              value={invoiceData.client.workOrder}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setInvoiceData({
-                  ...invoiceData,
-                  client: { ...invoiceData.client, workOrder: e.target.value },
-                })
-              }
-            />
-            <span className="u-print-only">{invoiceData.client.workOrder}</span>
-          </span>
-        </p>
+        <div className={styles.invoice__field}>
+          <strong>Address:</strong>
+          <textarea
+            value={invoiceData.client.address}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              setInvoiceData({ ...invoiceData, client: { ...invoiceData.client, address: e.target.value } })
+            }
+          />
+        </div>
+        <div className={styles.invoice__field}>
+          <strong>GSTIN:</strong>
+          <input
+            value={invoiceData.client.gstin}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInvoiceData({ ...invoiceData, client: { ...invoiceData.client, gstin: e.target.value } })
+            }
+          />
+        </div>
+        <div className={styles.invoice__field}>
+          <strong>WO No:</strong>
+          <input
+            value={invoiceData.client.workOrder}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInvoiceData({ ...invoiceData, client: { ...invoiceData.client, workOrder: e.target.value } })
+            }
+          />
+        </div>
       </div>
 
       <table className={styles.invoice__table}>
@@ -175,7 +149,6 @@ export default function InvoiceMain() {
                     handleItemChange(index, 'description', e.target.value)
                   }
                 />
-                <span className="u-print-only">{item.description}</span>
               </td>
               <td>
                 <input
@@ -185,7 +158,6 @@ export default function InvoiceMain() {
                     handleItemChange(index, 'hsn', e.target.value)
                   }
                 />
-                <span className="u-print-only">{item.hsn}</span>
               </td>
               <td>
                 <input
@@ -196,7 +168,6 @@ export default function InvoiceMain() {
                     handleItemChange(index, 'qty', e.target.value)
                   }
                 />
-                <span className="u-print-only">{item.qty}</span>
               </td>
               <td>
                 <input
@@ -208,7 +179,6 @@ export default function InvoiceMain() {
                     handleItemChange(index, 'rate', e.target.value)
                   }
                 />
-                <span className="u-print-only">{item.rate}</span>
               </td>
               <td>{(item.qty * item.rate).toFixed(2)}</td>
               <td className="u-no-print">
@@ -226,7 +196,7 @@ export default function InvoiceMain() {
           ))}
         </tbody>
       </table>
-      <div className={clsx(styles.invoice__actions, 'u-no-print')}>
+      <div className={`${styles.invoice__actions} u-no-print`}>
         <Button type="button" variant="secondary" onClick={handleAddRow}>
           + Add New Row
         </Button>
@@ -264,7 +234,7 @@ export default function InvoiceMain() {
         </div>
       </div>
 
-      <div className={clsx(styles.invoice__actions, 'u-no-print')}>
+      <div className={`${styles.invoice__actions} u-no-print`}>
         <Button type="button" variant="primary" onClick={handlePrint}>
           Print / Download PDF
         </Button>

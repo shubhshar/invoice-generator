@@ -1,20 +1,21 @@
-// Cross-cutting print toggles shared by any feature that needs a screen-only
-// input paired with a print-only rendering of the same value.
-.u-print-only {
-  display: none;
-}
-
 @media print {
+  body {
+    background-color: #fff;
+    padding: 0;
+  }
+
   .u-no-print {
     display: none !important;
   }
 
-  .u-print-only {
-    display: inline !important;
-  }
-
   input,
   textarea {
-    display: none !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    resize: none !important;
+    box-shadow: none !important;
+    outline: none !important;
   }
 }

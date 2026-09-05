@@ -1,6 +1,0 @@
-@use './styles/mixins' as mix;
-
-.app {
-  @include mix.flex(column, flex-start, center, var(--space-md));
-  padding: var(--space-md);
-}
