@@ -1,0 +1,97 @@
+version: '3.8'
+
+# Docker Compose Configuration
+# This file defines TWO services:
+# 1. PostgreSQL database (postgres)
+# 2. FastAPI backend (backend)
+#
+# Why together?
+# - They need to communicate with each other
+# - Docker Compose creates a network connecting them
+# - Backend can access database at: postgresql://postgres:5432/invoice_generator
+#
+# How to use:
+# 1. docker-compose up -d          # Start both services
+# 2. docker-compose logs -f        # See logs
+# 3. docker-compose down           # Stop both services
+
+
+services:
+
+  # =========================================================================
+  # SERVICE 1: PostgreSQL Database
+  # =========================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: invoice_generator_db
+    environment:
+      # Database credentials that FastAPI will use to connect
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: invoice_generator
+    ports:
+      # Map: container port 5432 → host port 5432
+      # Allows accessing from: postgresql://localhost:5432/invoice_generator
+      - "5432:5432"
+    volumes:
+      # Persist database data even after container stops
+      # postgres_data is a named volume (defined at bottom)
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      # Check if database is ready before backend tries to connect
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  # =========================================================================
+  # SERVICE 2: FastAPI Backend
+  # =========================================================================
+  backend:
+    build:
+      # Build instructions from Dockerfile (in this directory)
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: invoice_generator_backend
+
+    # What port to expose on your local machine
+    ports:
+      # Map: container port 8000 → host port 8000
+      # Access at: http://localhost:8000
+      - "8000:8000"
+
+    # Environment variables for the app (same as .env file)
+    environment:
+      # DATABASE_URL tells FastAPI where PostgreSQL is
+      # "postgres" = the service name above (Docker DNS resolves it)
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/invoice_generator
+      SECRET_KEY: change-this-in-production
+      ENVIRONMENT: development
+
+    # Volume mounting: local files ↔ container files
+    volumes:
+      # Sync local code to container for hot reload
+      # Local path: ./  (backend directory on your Mac)
+      # Container path: /app/backend/ (inside container)
+      # Any changes you make locally appear instantly in container
+      - .:/app/backend
+
+    # Ensures PostgreSQL starts before backend tries to connect
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    # Keep container running even if main process stops
+    restart: unless-stopped
+
+
+# ============================================================================
+# VOLUMES: Persistent Data Storage
+# ============================================================================
+volumes:
+  # Named volume for PostgreSQL data
+  # persists database even when container is deleted
+  postgres_data:
+    driver: local
