@@ -1,0 +1,249 @@
+.invoice {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 36px 40px;
+  border: 1.5px solid var(--color-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 8px 28px rgba(0, 0, 0, 0.06);
+  font-family: var(--font-family-serif);
+  font-size: var(--font-size-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+
+  input,
+  textarea {
+    background-color: #fafafa;
+    color: var(--color-text);
+    border: 1px solid #b8b8b8;
+    border-radius: var(--radius-sm);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
+    padding: 4px 8px;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+
+    &:hover {
+      border-color: #888;
+    }
+
+    &:focus-visible {
+      background-color: #fff;
+      border-color: var(--color-focus-ring);
+    }
+  }
+
+  textarea {
+    field-sizing: content;
+    overflow-y: hidden;
+    resize: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .invoice {
+    padding: 16px;
+    font-size: var(--font-size-sm);
+  }
+}
+
+.invoice__header {
+  text-align: center;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  p {
+    margin: 3px 0;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .invoice__header h1 {
+    font-size: 20px;
+  }
+}
+
+.invoice__address {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 14px;
+  gap: 6px;
+}
+
+.invoice__field {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  max-width: 520px;
+
+  strong {
+    min-width: 72px;
+    text-align: right;
+    flex-shrink: 0;
+    padding-top: 5px;
+    font-size: var(--font-size-base);
+  }
+
+  input {
+    flex: 1;
+  }
+
+  textarea {
+    flex: 1;
+  }
+}
+
+.invoice__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th,
+  td {
+    border: 1px solid var(--color-border);
+    padding: 10px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background-color: var(--color-surface-alt);
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+
+  tbody tr:hover {
+    background-color: #fafafa;
+  }
+
+  td textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  td:nth-child(6) {
+    width: 80px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .invoice__table th,
+  .invoice__table td {
+    font-size: 11px;
+    padding: 5px;
+  }
+}
+
+.invoice__table-total-header {
+  width: 100px;
+}
+
+.invoice__hsn-qty-rate {
+  width: 4rem;
+}
+
+.invoice__summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 20px;
+  border-top: 2px solid var(--color-border);
+  padding-top: 12px;
+  gap: 2px;
+
+  p {
+    margin: 3px 0;
+  }
+}
+
+.invoice__summary-total {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  text-align: right;
+}
+
+.invoice__summary-words {
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin-top: 6px;
+  font-size: 0.82rem;
+}
+
+.invoice__footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 44px;
+  padding-top: 16px;
+  border-top: 1px solid #d0d0d0;
+}
+
+@media (max-width: 768px) {
+  .invoice__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.invoice__bank-details {
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 3px;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .invoice__bank-details {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+
+  .invoice__bank-ac-ifsc {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .invoice__signature {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+}
+
+.invoice__signature {
+  text-align: right;
+}
+
+.invoice__signature-line {
+  margin-top: 50px;
+  text-decoration: underline;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+}
+
+.invoice__actions {
+  margin-top: 20px;
+  text-align: center;
+}

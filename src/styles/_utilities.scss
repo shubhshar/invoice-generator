@@ -1,0 +1,21 @@
+@media print {
+  body {
+    background-color: #fff;
+    padding: 0;
+  }
+
+  .u-no-print {
+    display: none !important;
+  }
+
+  input,
+  textarea {
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    resize: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
